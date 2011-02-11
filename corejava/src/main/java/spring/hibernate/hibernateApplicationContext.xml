@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url"
+			value="jdbc:h2:mem:;INIT=RUNSCRIPT FROM 'src/main/java/hibernate/script/schema.ddl'" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocations" value="hibernate/hibernate.cfg.xml"/>
+		<!-- If hibernate.cfg.xml is not specified, specify hibernate properties is also ok. -->
+		<!-- 
+		<property name="dataSource" ref="myDataSource" />
+		<property name="mappingResources">
+			<list>
+				<value>hibernate/domain/Event.hbm.xml</value>
+				<value>hibernate/domain/Person.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+				<prop key="current_session_context_class">thread</prop>
+				<prop key="cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+				<prop key="show_sql">true</prop>
+				<prop key="hbm2ddl.auto">update</prop>
+				<prop key="connection.pool_size">1</prop>
+			</props>
+		</property>
+		 -->
+	</bean>
+	<bean id="simpleHibernateDao" class="spring.hibernate.PersonDao">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+
+</beans>

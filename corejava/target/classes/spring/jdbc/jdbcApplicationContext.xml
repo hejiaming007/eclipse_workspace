@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+		
+		
+	<!-- 
+	PropertyPlaceholderConfigurer for repleace properties value in config. also can provide encrypted/decrypted function.
+	 -->
+	 <!-- 
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<value>jdbc.properties</value>
+		</property>
+	</bean>
+	 -->
+	 <!-- More easier way to define place holder: -->
+	<context:property-placeholder location="jdbc.properties"/>
+
+	
+	<!-- request, session, global session scope are just for web aware application context, such as XmlWebApplicastionContext -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" scope="singleton"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	<bean id="simpleJdbcDao"
+		class="spring.jdbc.UserDao">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+</beans>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<hjming:note xmlns:hjming="http://www.hjming.com"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hjming.com note.xsd"
+	>
+	<!--
+		xsi:schemaLocation has two attribute: one is the name of naming space
+		you are going to use, the other one is the XML schema's location.
+		
+		if the first attribute is 
+	-->
+	<hjming:to>George</hjming:to>
+	<hjming:from>John</hjming:from>
+	<hjming:heading>Reminder</hjming:heading>
+	<hjming:body2>Don't forget the meeting!</hjming:body2>
+	<hjming:body>1312</hjming:body>
+	<hjming:extAtt>1</hjming:extAtt>
+	<hjming:extAtt>2</hjming:extAtt>
+</hjming:note>
+
+
+	<!--
+		In this xml, used 2 namespace: hjming:
+		xmlns:hjming="http://www.hjming.com" xsi:
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" It also can use
+		the default namespace without prefix: xmlns="http://www.hjming.com"
+
+		then all elements defines in namespace "http://www.hjming.com" don't
+		need to use prefix "hjming" anymore.
+	-->
+
+	<!--
+		This is the scheam sample: <?xml version="1.0"?> <xs:schema
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		elementFormDefault="qualified" targetNamespace="http://www.hjming.com"
+		xmlns="http://www.hjming.com" > <xs:element name="note">
+		<xs:complexType> <xs:sequence> <xs:element name="to" type="xs:string"
+		/> <xs:element name="from" type="xs:string" /> <xs:element
+		name="heading" type="xs:string" /> <xs:element name="body2"
+		type="xs:string" /> <xs:element name="body" type="xs:string" />
+		</xs:sequence> </xs:complexType> </xs:element> </xs:schema>
+	-->

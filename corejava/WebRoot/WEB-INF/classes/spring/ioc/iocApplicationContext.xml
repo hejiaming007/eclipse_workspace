@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+	<!-- by default all beans are early initialize, for earlier find error by 
+		default no autowiring by default no check dependencies by default is singleton 
+		in <beans> , you can change the default behavior -->
+
+
+	<!-- request, session, global session scope are just for web aware application 
+		context, such as XmlWebApplicastionContext -->
+	<!-- bean name is optional -->
+	<!-- bean's destory-method is just for singleton scope, while init-method 
+		is available for all scopes -->
+	<bean id="BeanA" class="spring.ioc.BeanA"> <!-- bean id must be unique -->
+		<!-- constructor-arg is not only for constructor, can also be used by factory 
+			method -->
+		<constructor-arg>
+			<value>Hello</value>
+		</constructor-arg>
+		<property name="strValue">
+			<value>jimmy</value>
+		</property>
+		<property name="subObject" ref="BeanB"></property>
+	</bean>
+	<bean id="BeanB" class="spring.ioc.BeanB" lazy-init="false"
+		factory-method="getInstance"><!-- factory method is for static get instance method -->
+	</bean>
+
+</beans>

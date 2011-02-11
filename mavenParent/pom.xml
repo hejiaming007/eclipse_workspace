@@ -1,0 +1,260 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>mavenParent</groupId>
+	<artifactId>mavenParent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<url>http://maven.apache.org</url>
+	<licenses>
+		<license>
+			<name>Apache 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
+	</licenses>
+	<organization>
+		<name>HSBC</name>
+		<url>http://www.hsbc.com</url>
+	</organization>
+	<developers>
+		<developer>
+			<id>Jimmy</id>
+			<name>Jimmy Jia Ming He</name>
+			<email>Jimmy.jia.ming.he@hsbc.com</email>
+			<url>http://www.hsbc.com</url>
+			<organization>Sonatype</organization>
+			<organizationUrl>http://www.hsbc.com</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
+	<properties>
+		<!-- Because in this project there's some chinese character in java code, 
+			so need to specify the source encoding. For copy file filter using. -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- Because in this project there's some chinese character in java code, 
+			so need to specify the source encoding. For compile java using. -->
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+		<org.slf4j.version>1.5.10</org.slf4j.version>
+	</properties>
+	<distributionManagement>
+		<!-- Each arctifact need to specify which release server it should be deployed 
+			to -->
+		<repository>
+			<id>Releases</id>
+			<name>Internal Releases</name>
+			<url>http://localhost:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>Snapshots</id>
+			<name>Internal Snapshots</name>
+			<url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<scm>
+		<connection>scm:svn:file:///E:/SVN/svn_repository/mavenParent</connection>
+		<developerConnection>scm:svn:file:///E:/SVN/svn_repository/mavenParent</developerConnection>
+		<tag>HEAD</tag>
+		<url>file:///E:/SVN/svn_repository/mavenParent</url>
+	</scm>
+	<!-- Because in this project need some Java5 new feature. so need source 
+		and target level at 5. -->
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>1.0-beta-1</version>
+				<executions>
+					<execution>
+						<id>enforce-versions</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>2.2.1</version>
+								</requireMavenVersion>
+								<requireJavaVersion>
+									<version>1.5</version>
+								</requireJavaVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>xerces</groupId>
+				<artifactId>xercesImpl</artifactId>
+				<version>2.9.1</version>
+			</dependency>
+			<dependency>
+				<groupId>xerces</groupId>
+				<artifactId>xerces</artifactId>
+				<version>2.4.0</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<dependencies>
+		<!-- Logging start -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j.version}</version>
+		</dependency>
+		<!-- Spring content componment depends on jakara commons logging, so need 
+			this jcl-over-slf4j to bridge jcl request to slf4j. -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j.version}</version>
+			<!-- Scope specification start: compile compile can see it, runtime need 
+				it, will be included in packaging, default scope and most compatiable provided 
+				complie can see it, runtime need it, but will be exculded from packaging, 
+				e.g. servlet.jar runtime compile can't see it, but runtime need it, and will 
+				be included in packaging, e.g. log4j test compile can see it, test need it, 
+				runtime no need it, will be exculded from packaging, e.g. junit.jar system 
+				This scope is similar to provided, except Maven find the jar from local file 
+				system instead of maven repository. e.g. Docflex is a commercial software, 
+				after download it and extract the package, if you need to depends on Docflex's 
+				jar, you should specify its scope as system, and do not upload it to any 
+				Maven repository for license compliance. <dependency> <groupId>docflex</groupId> 
+				<artifactId>docflex-xml</artifactId> <version>1.8.0</version> <scope>system</scope> 
+				<systemPath>C:\docflex-xml-re-1.8.0\lib\docflex-xml-re.jar</systemPath> </dependency> 
+				Scope specification end. -->
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Logging end -->
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.10</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.3.149</version>
+		</dependency>
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.11.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>3.0.1.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-hibernate3</artifactId>
+			<version>2.0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-dao</artifactId>
+			<version>2.0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>3.0.5.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>3.0.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.perf4j</groupId>
+			<artifactId>perf4j</artifactId>
+			<version>0.9.13</version>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>1.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.3.2.GA</version>
+		</dependency>
+		<!-- <dependency> <groupId>de.schlichtherle</groupId> <artifactId>truezip</artifactId> 
+			<version>6.8.1</version> </dependency> -->
+	</dependencies>
+</project>
