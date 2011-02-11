@@ -26,7 +26,7 @@
 				<excludes>
 					<exclude>**/*.java</exclude>
 				</excludes>
-			</resource>
+			</resource>1
 		</resources>
 		<plugins>
 			<plugin>
